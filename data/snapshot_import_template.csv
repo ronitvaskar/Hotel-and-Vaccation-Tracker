@@ -1,0 +1,2 @@
+property_id,check_in,check_out,guests,rooms,meal_preference,cancellation_preference,observed_at,room_type,availability_status,available_units,public_rate,selling_rate,taxes_fees,discount_amount,currency,meal_plan,cancellation_terms,rating,review_count,source_reference
+C001,2026-11-14,2026-11-16,2,1,Breakfast preferred,Free cancellation preferred,2026-10-04T09:30:00+05:30,Comparable lead room,available,5,12500,10900,1962,1600,INR,Breakfast included,Free cancellation,4.2,1250,REPLACE-WITH-APPROVED-SOURCE-REFERENCE

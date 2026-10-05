@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: prj-06-hotel-competitor-intelligence
+    runtime: python
+    plan: free
+    buildCommand: python -m compileall .
+    startCommand: python app.py
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9

@@ -1,0 +1,2 @@
+# No third-party runtime dependencies.
+# Python 3.11+ is recommended. SQLite is included with Python.

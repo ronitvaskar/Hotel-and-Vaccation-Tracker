@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Local hotel and vacation-rental competitor intelligence dashboard.">
+  <title>Hotel Competitor Intelligence Tracker</title>
+  <link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">M</div>
+      <div><strong>HOTEL INTELLIGENCE</strong><span>Competitor tracking system</span></div>
+    </div>
+    <nav aria-label="Primary">
+      <a class="active" href="#overview"><span>▦</span> Intelligence overview</a>
+      <a href="#price"><span>⌁</span> Rate position</a>
+      <a href="#portfolio"><span>◫</span> Competitor portfolio</a>
+      <a href="#changes"><span>↕</span> Change ledger</a>
+    </nav>
+    <div class="side-note">
+      <p class="eyebrow">COLLECTION POLICY</p>
+      <p>Only approved feeds, partner exports, or authorised manual capture should enter this database.</p>
+      <a href="/docs/RUNBOOK.md" target="_blank" rel="noreferrer">Open operating runbook →</a>
+    </div>
+    <footer>Local-first · SQLite history<br><span id="dbHealth">Checking database…</span></footer>
+  </aside>
+
+  <main>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">LONAVALA · KARJAT LEISURE MARKET</p>
+        <h1>Hotel &amp; Vacation Rental Competitor Intelligence</h1>
+        <p class="subhead">Track comparable properties, preserve historical booking observations, detect market changes, and estimate demand signals under consistent booking conditions.</p>
+      </div>
+      <div class="controls">
+        <label for="conditionSelect">Analysis condition</label>
+        <select id="conditionSelect" aria-label="Choose booking condition"></select>
+        <p id="conditionMeta" class="control-meta"></p>
+      </div>
+    </header>
+
+    <section id="demoNotice" class="notice hidden" role="status">
+      <strong>Demonstration dataset</strong>
+      <span>Values in this local installation are synthetic and exist to demonstrate the workflow. Replace them with authorised observations before making a commercial decision.</span>
+    </section>
+
+    <section class="system-strip" aria-label="System coverage">
+      <span><b id="systemProperties">—</b> properties tracked</span>
+      <span><b id="systemObservations">—</b> observations stored</span>
+      <span><b id="systemCheckpoints">—</b> checkpoints</span>
+      <span><b id="systemRuns">—</b> collection runs</span>
+      <span class="source-status" id="systemSource">Source: —</span>
+      <a id="exportObservations" href="/api/export/observations.csv" download>Export observations CSV</a>
+    </section>
+
+    <section id="overview" class="metric-grid" aria-label="Key performance indicators">
+      <article class="metric-card primary-card"><p>Primary rate</p><strong id="primaryRate">—</strong><span id="primaryRateNote">Selected condition</span></article>
+      <article class="metric-card"><p>Market average</p><strong id="marketAverage">—</strong><span id="ratePosition">—</span></article>
+      <article class="metric-card"><p>Available competitors</p><strong id="availableCount">—</strong><span>Available or limited</span></article>
+      <article class="metric-card"><p>Sold-out competitors</p><strong id="soldOutCount">—</strong><span>Same booking condition</span></article>
+      <article class="metric-card"><p>Estimated room nights</p><strong id="estimatedNights">—</strong><span>Visible-inventory signal</span></article>
+      <article class="metric-card"><p>Estimated gross value</p><strong id="estimatedRevenue">—</strong><span>Not confirmed revenue</span></article>
+    </section>
+
+    <section class="panel primary-panel" aria-labelledby="primary-title">
+      <div class="panel-heading">
+        <div><p class="eyebrow">PRIMARY PROPERTY</p><h2 id="primary-title">Loading…</h2></div>
+        <span id="primaryStatus" class="status">—</span>
+      </div>
+      <div class="primary-details">
+        <div><span>Latest observation</span><strong id="primaryObservation">—</strong></div>
+        <div><span>Visible units remaining</span><strong id="primaryUnits">—</strong></div>
+        <div><span>Estimated units sold</span><strong id="primaryEstimatedUnits">—</strong></div>
+        <div><span>Action</span><strong id="primaryAction">—</strong></div>
+      </div>
+    </section>
+
+    <section id="price" class="content-grid">
+      <article class="panel chart-panel">
+        <div class="panel-heading"><div><p class="eyebrow">RATE POSITION</p><h2>Primary vs. comparable set</h2></div><span class="muted">Net selling rate</span></div>
+        <div id="rateChart" class="rate-chart" aria-label="Competitor price comparison"></div>
+      </article>
+      <article class="panel chart-panel">
+        <div class="panel-heading"><div><p class="eyebrow">TIME SERIES</p><h2>Rate and availability movement</h2></div><span class="muted">Selected condition</span></div>
+        <div id="trendChart" class="trend-chart" aria-label="Historical price trend"></div>
+        <div class="legend"><span><i class="dot primary"></i>Primary rate</span><span><i class="dot market"></i>Competitor average</span></div>
+      </article>
+    </section>
+
+    <section class="content-grid secondary-grid">
+      <article class="panel small-chart-panel">
+        <div class="panel-heading"><div><p class="eyebrow">GUEST-COUNT TEST</p><h2>Average observed rate</h2></div></div>
+        <div id="guestMix" class="mini-bars"></div>
+      </article>
+      <article class="panel small-chart-panel">
+        <div class="panel-heading"><div><p class="eyebrow">DAY-OF-WEEK TEST</p><h2>Weekend positioning</h2></div></div>
+        <div id="weekendMix" class="mini-bars"></div>
+      </article>
+      <article class="panel small-chart-panel pressure-card">
+        <div class="panel-heading"><div><p class="eyebrow">VISIBLE INVENTORY</p><h2>Market pressure proxy</h2></div></div>
+        <strong id="pressureMetric">—</strong>
+        <p id="pressureNote">—</p>
+      </article>
+    </section>
+
+    <section class="panel table-panel room-panel">
+      <div class="panel-heading">
+        <div><p class="eyebrow">ROOM-TYPE CHECK</p><h2>Observed room-type mix</h2></div>
+        <span class="muted">Selected booking condition</span>
+      </div>
+      <div id="roomTypes" class="room-types"></div>
+    </section>
+
+    <section id="portfolio" class="panel table-panel">
+      <div class="panel-heading">
+        <div><p class="eyebrow">COMPETITOR PORTFOLIO</p><h2><span id="competitorCoverage">30</span> comparable properties</h2></div>
+        <div class="table-note"><span class="signal high"></span> Prioritised signals first</div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Property</th><th>Market</th><th>Current rate</th><th>Rate move</th><th>Availability</th><th>Visible units</th><th>Est. units sold</th><th>Action flag</th></tr></thead>
+          <tbody id="competitorTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="changes" class="content-grid bottom-grid">
+      <article class="panel table-panel">
+        <div class="panel-heading"><div><p class="eyebrow">CHANGE LEDGER</p><h2>Top changes since prior check</h2></div></div>
+        <div id="changesList" class="change-list"></div>
+      </article>
+      <article class="panel methodology">
+        <p class="eyebrow">ESTIMATION DISCLOSURE</p>
+        <h2>Make signals useful—without overstating them.</h2>
+        <p id="methodologySales">—</p>
+        <p id="methodologyRevenue">—</p>
+        <a href="/docs/ESTIMATION_METHODOLOGY.md" target="_blank" rel="noreferrer">Read the methodology →</a>
+      </article>
+    </section>
+  </main>
+  <script src="/assets/dashboard.js"></script>
+</body>
+</html>
