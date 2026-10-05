@@ -162,7 +162,7 @@ class TrackerHandler(BaseHTTPRequestHandler):
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run the local competitor intelligence dashboard.")
     parser.add_argument("--db", type=Path, default=DEFAULT_DB, help="SQLite database path (default: data/tracker.db)")
-    parser.add_argument("--host", default=os.getenv("HOST", "127.0.0.1"), help="Bind address (default: 127.0.0.1)")
+    parser.add_argument("--host", default=os.getenv("HOST", "0.0.0.0"), help="Bind address (default: 0.0.0.0)")
     parser.add_argument("--port", type=int, default=int(os.getenv("PORT", "8765")), help="TCP port (default: 8765)")
     parser.add_argument("--seed-demo", action="store_true", help="Create/reset the clearly labelled synthetic demonstration dataset.")
     args = parser.parse_args()
